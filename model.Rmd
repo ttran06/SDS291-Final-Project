@@ -18,7 +18,7 @@ data <- read.csv("DOHMH_Childcare_Center_Inspections.csv", header=TRUE) %>%
 data$Date.Permitted <- as.Date(data$Date.Permitted, format = "%m/%d/%Y")
 data$Inspection.Date <- as.Date(data$Inspection.Date, format = "%m/%d/%Y")
 data <- data %>%
-  mutate(age_center = difftime(Inspection.Date, Date.Permitted, units = "days"))%>%
+  mutate(age_center = difftime(Inspection.Date, Date.Permitted, units = "days")) %>%
   select(ZipCode,Maximum.Capacity,Facility.Type,
         Total.Educational.Workers,Critical.Violation.Rate,age_center)
 
@@ -37,3 +37,21 @@ regModel <- lm(critical_violation_rate ~ zip_code + facility_type + maximum_capa
 
 summary(regModel)
 ```
+
+# Most Significant Variable
+
+```{r}
+m_zip <- lm(critical_violation_rate ~ zip_code, data = data)
+m_facil <- lm(critical_violation_rate ~ facility_type, data = data)
+m_max <- lm(critical_violation_rate ~ maximum_capacity, data = data)
+m_edWorker <- lm(critical_violation_rate ~ total_educational_workers, data = data)
+m_age <- lm(critical_violation_rate ~ age_center, data = data)
+
+summary(m_zip)
+summary(m_facil)
+summary(m_max)
+summary(m_edWorker)
+summary(m_age)
+```
+
+Variable with most significant effect: zip_code $R^2$: 0.0004441
