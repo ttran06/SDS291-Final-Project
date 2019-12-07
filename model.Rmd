@@ -87,6 +87,20 @@ unusual_points <- data %>%
 # H_i
 unusual_points %>%
   filter(h_i > 12/43538  | h_i > 18/43538)
+
+# Standardized residual
+unusual_points %>%
+  filter(abs(stnd_res) > 2 | abs(stnd_res) > 3)
+
+# Studentized residual
+unusual_points %>%
+  filter(abs(stud_res) > 2 | abs(stud_res) > 3)
+
+# Cooks
+unusual_points %>%
+  filter(cooks > 0.5 | cooks > 1)
 ```
 
-According to leverage, there are 2876 unusual points in the dataset.
+Leverage: 2876 unusual points
+Standardized residual: 1038 unusual points
+Studentized residual; 1038 unusual points
