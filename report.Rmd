@@ -1,0 +1,16 @@
+---
+title: "Will New York City Kill Your Children?"
+author: "Olivia Handoko, Roshni Patnayakuni, and Truc Tran"
+date: "12/7/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r include=FALSE}
+data <- read.csv("DOHMH_Childcare_Center_Inspections.csv", header=TRUE) %>%
+  filter(Status == "Active" | Status == "Permitted")
+```
