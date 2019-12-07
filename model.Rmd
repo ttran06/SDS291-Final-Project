@@ -14,44 +14,79 @@ library(janitor)
 ```{r include=FALSE}
 # Cleaning up data
 data <- read.csv("DOHMH_Childcare_Center_Inspections.csv", header=TRUE) %>%
-  filter(Status == "Active" | Status == "Permitted")
+  filter(Status == "Active" | Status == "Permitted") %>%
+  select(ZipCode,Maximum.Capacity,Program.Type,
+        Total.Educational.Workers,Critical.Violation.Rate, Date.Permitted, Inspection.Date)
+
+# Remove rows with NA
+data <- na.omit(data)
+
+# Remove empty rows
+data <- data %>%
+  filter(Date.Permitted != "")
+
 data$Date.Permitted <- as.Date(data$Date.Permitted, format = "%m/%d/%Y")
 data$Inspection.Date <- as.Date(data$Inspection.Date, format = "%m/%d/%Y")
+
 data <- data %>%
-  mutate(age_center = difftime(Inspection.Date, Date.Permitted, units = "days")) %>%
-  select(ZipCode,Maximum.Capacity,Facility.Type,
-        Total.Educational.Workers,Critical.Violation.Rate,age_center)
+  mutate(age_center = difftime(Inspection.Date, Date.Permitted, units = "days"))
 
 # Clean Column names
 data <- clean_names(data)
-
-data$facility_type <- as.character(data$facility_type)
-# Remove NA
-data$age_center[is.na(data$age_center)] <- 0
 ```
 
 # Model
 
 ```{r}
-regModel <- lm(critical_violation_rate ~ zip_code + facility_type + maximum_capacity + total_educational_workers + age_center, data = data)
+regModel <- lm(critical_violation_rate ~ zip_code + program_type + maximum_capacity + total_educational_workers + age_center, data = data)
 
 summary(regModel)
+anova(regModel)
+
+predVal <- predict(regModel)
+residVal <- residuals(regModel)
+ggplot(mapping = aes(x = predVal, y = residVal)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "red") +
+  labs(title = "Residual Plot", x = "Predicted Values", y = "Residuals")
+qqnorm(residVal, pch=19)
+qqline(residVal, col="red")
 ```
+
+$R^2 = 0.009692$, $R_{\text{adj}}^2 = 0.009594$
 
 # Most Significant Variable
 
 ```{r}
 m_zip <- lm(critical_violation_rate ~ zip_code, data = data)
-m_facil <- lm(critical_violation_rate ~ facility_type, data = data)
+m_prog <- lm(critical_violation_rate ~ program_type, data = data)
 m_max <- lm(critical_violation_rate ~ maximum_capacity, data = data)
 m_edWorker <- lm(critical_violation_rate ~ total_educational_workers, data = data)
 m_age <- lm(critical_violation_rate ~ age_center, data = data)
 
 summary(m_zip)
-summary(m_facil)
+summary(m_prog)
 summary(m_max)
 summary(m_edWorker)
 summary(m_age)
 ```
 
 Variable with most significant effect: zip_code $R^2$: 0.0004441
+
+# Finding Unusual Points
+
+```{r}
+# Diagnostic
+diag <- ls.diag(regModel)
+
+unusual_points <- data %>%
+  mutate(h_i = diag$hat,
+         stnd_res = diag$std.res,
+         stud_res = diag$stud.res,
+         cooks = diag$cooks)
+# H_i
+unusual_points %>%
+  filter(h_i > 12/43538  | h_i > 18/43538)
+```
+
+According to leverage, there are 2876 unusual points in the dataset.
