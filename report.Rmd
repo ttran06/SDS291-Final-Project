@@ -1,16 +1,28 @@
 ---
 title: "Will New York City Kill Your Children?"
 author: "Olivia Handoko, Roshni Patnayakuni, and Truc Tran"
-date: "12/7/2019"
+date: "12/10/2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-library(tidyverse)
-library(ggplot2)
-```
+Abstract: a short, one paragraph explanation of your project. The abstract should not consist of more than 5 or 6 sentences, but should relate what you studied and what you found. It need only convey a general sense of what you actually did. The purpose of the abstract is to give a prospective reader enough information to decide if they want to read the full paper.
 
-```{r include=FALSE}
-data <- read.csv("DOHMH_Childcare_Center_Inspections.csv", header=TRUE) %>%
-  filter(Status == "Active" | Status == "Permitted")
-```
+Introduction: an overview of your project. In a few paragraphs, you should explain clearly and precisely what your research question is, why it is interesting, and what contribution you have made towards answering that question. You should give an overview of the specifics of your model, but not the full details. Most readers never make it past the introduction, so this is your chance to hook the reader, and is in many ways the most important part of the paper!
+
+Data: a brief description of your data set. What variables are included? Where did they come from? What are units of measurement? What is the population that was sampled? How was the sample collected? You should also include some basic univariate analysis.
+
+Results: an explanation of what your model tells us about the research question. You should interpret coefficients in context and explain their relevance. What does your model tell us that we didn’t already know before? You may want to include negative results, but be careful about how you interpret them. For example, you may want to say something along the lines of: “we found no evidence that explanatory variable x
+x
+ is associated with response variable y
+y
+,” or “explanatory variable x
+x
+ did not provide any additional explanatory power above what was already conveyed by explanatory variable z
+z
+.” On other hand, you probably shouldn’t claim: “there is no relationship between x
+x
+ and y
+y
+.”
+
+Conclusion: a summary of your findings and a discussion of their limitations. First, remind the reader of the question that you originally set out to answer, and summarize your findings. Second, discuss the limitations of your model, and what could be done to improve it. You might also want to do the same for your data. This is your last opportunity to clarify the scope of your findings before a journalist misinterprets them and makes wild extrapolations! Protect yourself by being clear about what is not implied by your research.

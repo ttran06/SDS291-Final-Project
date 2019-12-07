@@ -1,0 +1,19 @@
+---
+title: "Model"
+author: "Truc Tran"
+date: "12/7/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r include=FALSE}
+data <- read.csv("DOHMH_Childcare_Center_Inspections.csv", header=TRUE) %>%
+  filter(Status == "Active" | Status == "Permitted") %>%
+  select(Center.Name, Legal.Name,ZipCode,Maximum.Capacity,
+         Total.Educational.Workers,Date.Permitted,
+         Public.Health.Hazard.Violation.Rate)
+```
