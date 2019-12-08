@@ -86,19 +86,18 @@ unusual_points <- data %>%
          cooks = diag$cooks)
 # H_i
 unusual_points %>%
-  filter(h_i > 12/43538  | h_i > 18/43538)
+  filter(h_i > 12/43538  | h_i > 18/43538) %>%
+  head(5)
 
 # Standardized residual
 unusual_points %>%
-  filter(abs(stnd_res) > 2 | abs(stnd_res) > 3)
+  filter(abs(stnd_res) > 2 | abs(stnd_res) > 3) %>%
+  head(5)
 
 # Studentized residual
 unusual_points %>%
-  filter(abs(stud_res) > 2 | abs(stud_res) > 3)
-
-# Cooks
-unusual_points %>%
-  filter(cooks > 0.5 | cooks > 1)
+  filter(abs(stud_res) > 2 | abs(stud_res) > 3) %>%
+  head(5)
 ```
 
 Leverage: 2876 unusual points
