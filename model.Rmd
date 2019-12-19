@@ -35,7 +35,17 @@ data <- data %>%
 data <- clean_names(data)
 ```
 
-# Model
+# Abstract:
+This research focused on the variables that can potentially affect whether a childcare center will have a health violation. 2196 childcare centers were observed in this analysis across a span of 3 years. We predicted that longer standing childcares may have lower critical violation rate while also hypothesizing that zip code might be correlated with the amount of critical violation rate as well. Therefore, there could be higher critical violations when combining zip code and date permitted as interaction terms for those in low socioeconomic neighborhoods and child cares that may have not lasted as long as others. As well, we hypothesize that since zip code may have an effect on the conditions of a childcare center, educational workers may be correlated to the critical violation rate, as the more workers there are at a childcare center, as this may be indicative of the economic status of the business. Combining all 3 possible critical predictors would create the most variability in the effects it has on critical violation rates. Our analysis showed that with all 5 predictors (“Critical Violation Rate”, “Maximum Capacity”, “Total Education Workers”, “Date Permitted”, “ Zip Code”, and “Program Type”), there showed little variance in explaining the response variable, critical violation rate (<1%). 
+
+# Introduction
+
+New York City hosts approximately 8.623 million people (from the 2017 consensus) which makes the city the most populous place in the United States. Of those statistics, more than 1.7 million children make up New York City’s population. That’s about 20% of the population! It is no doubt that with that many residents, New York City may struggle with cleanliness. However, these health inspections are mostly talked about in food facilities and rarely are these about facilities that cater to children. Childcare centers across New York City are often one of the main places that specifically serves children and an interesting target to research the cleanliness of New York City. 
+For our research project, we decided to analyze New York City’s Department of Health and Mental Hygiene. This dataset was offered through Kaggle’s free database that allowed us to see important statistics regarding the conditions of all the childcare centers in file, from December 2016 to December 2019, after inspections. Within this dataset, there are a total of around 53,400 observations with 2,196 unique child care centers all across New York City. Of those columns identified, we decided to focus on “Critical Violation Rate”, “Maximum Capacity”, “Total Education Workers”, “Date Permitted”, “ Zip Code”, and “Program Type” as critical predictors in influencing lower critical violation rate in these centers. With a focus on those variables, we wanted to know which of the 5 predictors has the most significant effect on lower critical violation rate as our main research question. To do this, we created a multiple regression model that would give us a sense of the 5 predictors in explaining the results of the response variable (critical violation rate). Our results from this analysis will help us to predict where violations may happen to better prevent childcare centers from having them in the future. 
+
+# Data
+Our dataset gives information on Childcare Center Inspections in New York City and comes from the Department of Health and Mental Hygiene. The dataset contains the information gathered from inspections dating back to December 2016 all the way up to December 2019 and contains a variety of information about the centers themselves and the types and frequency of violations. It includes data from approximately 53,400 inspections across 2196 childcare centers. For our research project we examined the Critical Violation Rate, the percent of total critical violations broken by the childcare center at each inspection, as our response. Critical Violations are second degree violations: less severe then Public Health Hazards but more serious than General Violations., and must be corrected within 2 weeks. For our explanatory variables we primarily focused on data about the childcare centers themselves, so we can use the results to understand what types of centers might be considered unsafe. Specifically we examined the maximum capacity: the largest number of children the center can host, the total educational workers: the number of staff members involved in education, The date permitted, which will be used to determine the age of each day care in days, the zip code of the day care and the program type: whether they are an infant/toddler daycare or a preschool.
+
 
 ```{r}
 regModel <- lm(critical_violation_rate ~ zip_code + program_type + maximum_capacity + total_educational_workers + age_center, data = data)
@@ -54,6 +64,10 @@ qqline(residVal, col="red")
 ```
 
 $R^2 = 0.009692$, $R_{\text{adj}}^2 = 0.009594$
+```{r}
+
+```
+
 
 # Most Significant Variable
 
