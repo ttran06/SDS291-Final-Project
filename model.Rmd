@@ -59,6 +59,8 @@ qplot(age_center, data = data, main = "Distribution of Childcare Center Ages")
 ```
 Unlike the previous two variables, age of childcare center does not have a distribution that can be labelled as right or left skewed. Instead there appear to be 3 peaks  centerd at ages of approximately 750 days, 2250 days, and 5250 days.
 
+# Results
+
 ```{r}
 regModel <- lm(critical_violation_rate ~ zip_code + program_type + maximum_capacity + total_educational_workers + age_center, data = data)
 
@@ -81,11 +83,10 @@ qqnorm(residVal, pch=19)
 qqline(residVal, col="red")
 ```
 
-$R^2 = 0.009692$, $R_{\text{adj}}^2 = 0.009594$
+Upon Assessing the conditions of linearity it seems that most but not all the conditions of linearity are fulfulled. The residual plot indicates that while the model is linear and has constant variance the residuals are not independent to the predicted Y value. The Q-Q plot indicates that the condition of normality is fufilled for the model.
 
 
-
-# Most Significant Variable
+## Most Significant Variable
 
 ```{r}
 m_zip <- lm(critical_violation_rate ~ zip_code, data = data)
@@ -100,10 +101,9 @@ summary(m_max)
 summary(m_edWorker)
 summary(m_age)
 ```
+Upon examining the effect of each explanatory variable individually it can be determined that age_center has the greatest effect on critical violation rate. This aligns with the previous results that indicate that of all the variables used, the age of the center has the highest significance.
 
-Variable with most significant effect: zip_code $R^2$: 0.0004441
-
-# Finding Unusual Points
+## Finding Unusual Points
 
 ```{r}
 # Diagnostic
@@ -129,7 +129,10 @@ unusual_points %>%
   filter(abs(stud_res) > 2 | abs(stud_res) > 3) %>%
   head(5)
 ```
-
+These results indicat that there are a large number of points that could be considered outliers as follows:
 Leverage: 2876 unusual points
 Standardized residual: 1038 unusual points
-Studentized residual; 1038 unusual points
+Studentized residual; 1038 unusual points.
+
+# Conclusion
+This model does not do a good job of predicting the change in critical violation rate, as it only explains a small portion of variance in the response variable (<1%) and none of the variables are statistically significant. As well the model did not fulfill all the conditions of regression. If this project were to be continued, it might be worthwile to reproduce the model without the outliers listed above. As well, it may be helpful to test a transformation on some of the variables to fix the independence of residuals. Ultimately if none of this worked, it would be beneficial to look into other variables, perhaps those that present information on the results of the inspection, instead of the profile of the center.
