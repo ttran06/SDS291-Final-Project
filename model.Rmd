@@ -45,7 +45,19 @@ For our research project, we decided to analyze New York City’s Department of 
 
 # Data
 Our dataset gives information on Childcare Center Inspections in New York City and comes from the Department of Health and Mental Hygiene. The dataset contains the information gathered from inspections dating back to December 2016 all the way up to December 2019 and contains a variety of information about the centers themselves and the types and frequency of violations. It includes data from approximately 53,400 inspections across 2196 childcare centers. For our research project we examined the Critical Violation Rate, the percent of total critical violations broken by the childcare center at each inspection, as our response. Critical Violations are second degree violations: less severe then Public Health Hazards but more serious than General Violations., and must be corrected within 2 weeks. For our explanatory variables we primarily focused on data about the childcare centers themselves, so we can use the results to understand what types of centers might be considered unsafe. Specifically we examined the maximum capacity: the largest number of children the center can host, the total educational workers: the number of staff members involved in education, The date permitted, which will be used to determine the age of each day care in days, the zip code of the day care and the program type: whether they are an infant/toddler daycare or a preschool.
+```{r}
+qplot(maximum_capacity, data = data, main = "Distribution of Maximum Capacity")
+```
+The histogram of maximum capacity indicates that the distribution of this variable skews slightly to the left, as well as indicating some points with unusually high maximum capacity.
 
+```{r}
+qplot(total_educational_workers, data = data, main = "Distribution of Educational Workers")
+```
+Again, the histogram of total educational workers indicates that the distribution of this variable skews slightly to the left, as well as indicating some points with unusually high number of educational workers.
+```{r}
+qplot(age_center, data = data, main = "Distribution of Childcare Center Ages")
+```
+Unlike the previous two variables, age of childcare center does not have a distribution that can be labelled as right or left skewed. Instead there appear to be 3 peaks  centerd at ages of approximately 750 days, 2250 days, and 5250 days.
 
 ```{r}
 regModel <- lm(critical_violation_rate ~ zip_code + program_type + maximum_capacity + total_educational_workers + age_center, data = data)
