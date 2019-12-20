@@ -63,7 +63,13 @@ Unlike the previous two variables, age of childcare center does not have a distr
 regModel <- lm(critical_violation_rate ~ zip_code + program_type + maximum_capacity + total_educational_workers + age_center, data = data)
 
 summary(regModel)
+```
+The results from the model summary indicate that none of the variable cause significant change to critical violation rate, as they all have p values greater than 0.05. Furthermore, the adjusted r-squared indicates that this model only accounts for 0.77% of the variance in critical violation rate.
+```{r}
 anova(regModel)
+```
+The analysis of variance table reinforces what was learned from the coefficients table. None of the coefficents have a significant effect on the response variable.
+```{r}
 
 predVal <- predict(regModel)
 residVal <- residuals(regModel)
@@ -76,9 +82,7 @@ qqline(residVal, col="red")
 ```
 
 $R^2 = 0.009692$, $R_{\text{adj}}^2 = 0.009594$
-```{r}
 
-```
 
 
 # Most Significant Variable
