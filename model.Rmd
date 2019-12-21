@@ -2,10 +2,11 @@
 title: "Will New York City Kill Your Children"
 author: "Roshni Patnayakuni, Olivia Handoko, Truc Tran"
 date: "12/20/2019"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
+library(rmarkdown)
 library(tidyverse)
 library(ggplot2)
 library(janitor)
@@ -72,7 +73,6 @@ anova(regModel)
 ```
 The analysis of variance table reinforces what was learned from the coefficients table. None of the coefficents have a significant effect on the response variable.
 ```{r}
-
 predVal <- predict(regModel)
 residVal <- residuals(regModel)
 ggplot(mapping = aes(x = predVal, y = residVal)) +
